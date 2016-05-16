@@ -1,0 +1,16 @@
+{
+  "name": "Dictionary",
+  "version": "1.0.0",
+  "description": "Dicionário para o idioma indígena",
+  "scripts": {
+    "start": "node bootstrap.js"
+  },
+  "author": "Piero <pierophp@gmail.com> (https://github.com/pierophp/dictionary)",
+  "license": "CC0-1.0",
+  "private": true,
+  "main": "./main.js",
+  "dependencies": {
+    "electron-window-manager": "^1.0.1",
+    "express": "^4.13.4"
+  }
+}

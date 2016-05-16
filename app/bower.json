@@ -1,0 +1,28 @@
+{
+  "name": "Dictionary",
+  "directory": "public/bower_components",
+  "dependencies": {
+    "jquery": "latest",
+    "angular": "latest",
+    "angular-resource": "latest",
+    "angular-cookies": "latest",
+    "angular-mocks": "latest",
+    "angular-route": "latest",
+    "bootstrap": "latest",
+    "angular-bootstrap": "latest"
+  },
+  "description": "Dicionário para o idioma indígena",
+  "main": "./main.js",
+  "authors": [
+    "Piero <pierophp@gmail.com> (https://github.com/pierophp/dictionary)"
+  ],
+  "license": "CC0-1.0",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
