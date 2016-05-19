@@ -1,6 +1,5 @@
 {
   "name": "Dictionary",
-  "directory": "public/bower_components",
   "dependencies": {
     "jquery": "latest",
     "angular": "latest",
