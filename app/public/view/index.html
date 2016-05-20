@@ -1,3 +1,12 @@
 <div id="letters">
-    <a ng-repeat="letter in letters" href="?letter={{ letter }}">{{ letter }}</a> 
+    <a ng-repeat="letter in letters" href="?letter={{ letter }}">{{ letter }}</a>
+</div>
+
+<div ng-repeat="word in words" class="word">
+    <b>{{ word.text }} - </b> {{ word.translation.observation }}
+    <ul>
+        <li ng-repeat="translationWord in word.translation.words">
+            {{ translationWord.text }}
+        </li>
+    </ul>
 </div>

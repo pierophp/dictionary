@@ -3,13 +3,20 @@ angular.module("app.dictionary").controller("dictionaryCtrl", function ($scope, 
     
     $scope.letters = [];
     
+    $scope.words = [];
+    
     var _loadLetters = function () {
           $http.get('/letters').success(function(data){
               $scope.letters = data;
           });
     };
     
-    $scope.words = [];
+    var _loadWords = function () {
+          $http.get('/words').success(function(data){
+              $scope.words = data;
+          });
+    };
     
     _loadLetters();
+    _loadWords();
 });
