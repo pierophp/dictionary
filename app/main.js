@@ -16,7 +16,7 @@ let mainWindow;
 
 function createWindow() {
     
-    require('./bootstrap.js');
+    require('./index.js');
 
     const {app, BrowserWindow, screen: screen} = require('electron');
 

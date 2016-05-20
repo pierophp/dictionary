@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dicionário para o idioma indígena",
   "scripts": {
-    "start": "node bootstrap.js"
+    "start": "node index.js"
   },
   "author": "Piero <pierophp@gmail.com> (https://github.com/pierophp/dictionary)",
   "license": "CC0-1.0",

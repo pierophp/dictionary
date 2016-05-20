@@ -1,5 +1,5 @@
 app/node_modules
-app/public/bower_components
+app/public/lib
 node_modules
 .DS_Store
 .idea/

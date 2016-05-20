@@ -18,6 +18,14 @@ app.get('/letters', function (req, res) {
     res.send(JSON.stringify(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']));
 });
 
+app.get('/words', function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    var _words = [{
+        
+    }];
+    res.send(JSON.stringify(_words));
+});
+
 app.listen(9000, function () {
     console.log('Example app listening on port 9000!');
 });

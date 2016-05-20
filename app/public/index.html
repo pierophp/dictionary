@@ -5,21 +5,31 @@
 <head>
     <title>Dicionário</title>
     <meta charset="utf-8">
-    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+    <script src="/lib/angular/angular.min.js"></script>
+    <script src="/lib/angular-route/angular-route.min.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/controllers/dictionaryCtrl.js"></script>
 </head>
 
 <body>
+
     <div class="navbar navbar-inverse">
-        <a class="navbar-brand" href="/handview/">
+
+        <a class="navbar-brand" href="#/">
                Dicionário
         </a>
+
+        <a class="navbar-brand" href="#/about">
+               Sobre
+        </a>
+
         <ul class="nav navbar-nav">
+
             <li class="active" class="dropdown-submenu">
-                <a tabindex="-1" href="#">Palavras</a>
+                <a tabindex="-1">Palavras</a>
                 <ul class="dropdown-menu">
                     <li>
                         <a tabindex="-1" href="/">
@@ -31,8 +41,9 @@
                     </li>
                 </ul>
             </li>
+
             <li class="active" class="dropdown-submenu">
-                <a tabindex="-1" href="#">Frases</a>
+                <a tabindex="-1">Frases</a>
                 <ul class="dropdown-menu">
                     <li>
                         <a tabindex="-1" href="/">
@@ -46,8 +57,9 @@
             </li>
         </ul>
     </div>
-    <div id="container">
-        Hello MyApp
+
+    <div id="container" ng-view>
+
     </div>
 </body>
 

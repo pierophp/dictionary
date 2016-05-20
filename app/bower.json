@@ -1,14 +1,13 @@
 {
   "name": "Dictionary",
   "dependencies": {
-    "jquery": "latest",
-    "angular": "latest",
-    "angular-resource": "latest",
-    "angular-cookies": "latest",
-    "angular-mocks": "latest",
-    "angular-route": "latest",
-    "bootstrap": "latest",
-    "angular-bootstrap": "latest"
+    "angular": "^1.5.5",
+    "angular-resource": "^1.5.5",
+    "angular-cookies": "^1.5.5",
+    "angular-mocks": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "bootstrap": "^3.3.6",
+    "angular-bootstrap": "^1.3.2"
   },
   "description": "Dicionário para o idioma indígena",
   "main": "./main.js",
