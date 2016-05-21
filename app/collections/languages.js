@@ -8,6 +8,9 @@ Languages = Base.Collection.extend({
     model: Language,
     findAll: function(){
         return this.fetch();
+    }, 
+    findOneByCode: function (code) {
+        return this.where({code: code}).fet();
     }
 });
 

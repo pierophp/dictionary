@@ -10,7 +10,7 @@ var knex = require('knex')({
     user: config.connection.user,
     password: config.connection.password,
     database: config.connection.database,
-    charset: 'utf8'
+    charset: config.connection.charset
   }
 });
 

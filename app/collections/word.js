@@ -9,6 +9,9 @@ Words = Base.Collection.extend({
     model: Word,
     findAll: function(){
         return this.fetch();
+    },
+    findByLanguage: function (language) {
+        return this.where({language: language.get('id')}).fetch();
     }
 });
 

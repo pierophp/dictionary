@@ -9,73 +9,12 @@ var app = express();
 
 app.use(express.static('public'));
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-});
-
-app.get('/sync', function (req, res) {
-
-    var Languages = require('./collections/languages');
-    var languages = new Languages();
-    languages.findAll().then(function (languages) {
-
-        console.log(process.env.NODE_ENV);
-
-        languages.models.forEach(function (language) {
-            
-            //language.set('name', 'Test');
-            
-            console.log(language.get('code'));
-            console.log(language.get('name'));
-            
-            //language.save();
-        });
+app.use('/', require('./routes/index'));
+app.use('/test', require('./routes/test'));
+app.use('/letters', require('./routes/letters'));
+app.use('/words', require('./routes/words'));
 
 
-        //for(language in languages){
-        //    console.log(language.get('id'));    
-        //}
-
-    });
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(['Hi']));
-
-
-});
-
-app.get('/letters', function (req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']));
-});
-
-app.get('/words', function (req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    var _words = [{
-        text: 'Teste',
-        translation: {
-            observation: 'Observation test',
-            words: [
-                {
-                    text: 'Loren'
-                }, {
-                    text: 'Ipsum'
-                }
-            ]
-        },
-    }, {
-            text: 'Teste 02',
-            translation: {
-                observation: 'Observation test 02',
-                words: [
-                    {
-                        text: 'Dolor'
-                    }
-                ]
-            },
-        }];
-    res.send(JSON.stringify(_words));
-});
 
 app.listen(9000, function () {
     console.log('Example app listening on port 9000!');

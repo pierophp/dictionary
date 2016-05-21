@@ -13,7 +13,8 @@ module.exports = {
       host: '127.0.0.1',
       database: 'dictionary',
       user:     'root',
-      password: null
+      password: null,
+      charset: 'utf8'
     },
     pool: {
       min: 2,
@@ -30,7 +31,8 @@ module.exports = {
       host: '127.0.0.1',
       database: 'my_db',
       user:     'username',
-      password: 'password'
+      password: 'password',
+      charset: 'utf8'
     },
     pool: {
       min: 2,
@@ -42,12 +44,13 @@ module.exports = {
   },
 
   production: {
-    host: '127.0.0.1',
     client: 'postgresql',
     connection: {
+      host: '127.0.0.1',
       database: 'my_db',
       user:     'username',
-      password: 'password'
+      password: 'password',
+      charset: 'utf8'
     },
     pool: {
       min: 2,
