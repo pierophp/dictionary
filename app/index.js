@@ -13,6 +13,11 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
+app.get('/sync', function (req, res) {
+   sequelize = require('./models/index').sequelize;
+   sequelize.sync(); 
+});
+
 app.get('/letters', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']));

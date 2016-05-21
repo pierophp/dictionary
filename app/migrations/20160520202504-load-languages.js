@@ -1,22 +1,19 @@
 'use strict';
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-
-     //process.env.TZ = 'America/Sao_Paulo';
-     
-     console.log(process.env.TZ); 
+  up: function (queryInterface, Sequelize) { 
 
     return queryInterface.bulkInsert('language', [{
       code: 'pt',
       name: 'Português',
-      created_at: new Date()
+      created_at: new Date(),
+      updated_at: new Date()
     }, {
         code: 'tca',
         name: 'Ticuna',
-        created_at: new Date()
-
-      }], {});
+        created_at: new Date(),
+        updated_at: new Date()
+    }], {});
   },
 
   down: function (queryInterface, Sequelize) {

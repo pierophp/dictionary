@@ -2,18 +2,19 @@
 
 module.exports = function(sequelize, DataTypes) {
   
-  var Language = sequelize.define('language', {
-    code: DataTypes.STRING,
-    name: DataTypes.STRING
+  var Word = sequelize.define('Word', {
+    text: DataTypes.STRING,
+    type: DataTypes.STRING
   }, {
     underscored: true,
     freezeTableName: true,
     classMethods: {
       associate: function(models) {
-        // associations can be defined here
+        //Word.belongsTo(models.Language);
+        console.log(Word);
       }
     }
   });
   
-  return Language;
+  return Word;
 };
