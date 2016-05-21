@@ -1,20 +1,13 @@
-'use strict';
+"use strict";
 
-module.exports = function(sequelize, DataTypes) {
-  
-  var Word = sequelize.define('Word', {
-    text: DataTypes.STRING,
-    type: DataTypes.STRING
-  }, {
-    underscored: true,
-    freezeTableName: true,
-    classMethods: {
-      associate: function(models) {
-        //Word.belongsTo(models.Language);
-        console.log(Word);
-      }
+var bookshelf = require('../services').bookshelf,
+    Word;
+
+Word = bookshelf.Model.extend({
+    tableName: 'word',
+    language: function() {
+        return this.belongsTo(Language);
     }
-  });
-  
-  return Word;
-};
+});
+
+module.exports = bookshelf.model('Word', Word);

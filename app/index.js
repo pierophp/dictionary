@@ -14,8 +14,34 @@ app.get('/', function (req, res) {
 });
 
 app.get('/sync', function (req, res) {
-   sequelize = require('./models/index').sequelize;
-   sequelize.sync(); 
+
+    var Languages = require('./collections/languages');
+    var languages = new Languages();
+    languages.findAll().then(function (languages) {
+
+        console.log(process.env.NODE_ENV);
+
+        languages.models.forEach(function (language) {
+            
+            //language.set('name', 'Test');
+            
+            console.log(language.get('code'));
+            console.log(language.get('name'));
+            
+            //language.save();
+        });
+
+
+        //for(language in languages){
+        //    console.log(language.get('id'));    
+        //}
+
+    });
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(['Hi']));
+
+
 });
 
 app.get('/letters', function (req, res) {
@@ -37,17 +63,17 @@ app.get('/words', function (req, res) {
                 }
             ]
         },
-    },{
-        text: 'Teste 02',
-        translation: {
-            observation: 'Observation test 02',
-            words: [
-                {
-                    text: 'Dolor'
-                }
-            ]
-        },
-    }];
+    }, {
+            text: 'Teste 02',
+            translation: {
+                observation: 'Observation test 02',
+                words: [
+                    {
+                        text: 'Dolor'
+                    }
+                ]
+            },
+        }];
     res.send(JSON.stringify(_words));
 });
 
