@@ -7,10 +7,10 @@ var Base  = require('./base'),
 Languages = Base.Collection.extend({
     model: Language,
     findAll: function(){
-        return this.fetch();
+        return Language.where({}).fetchAll();
     }, 
     findOneByCode: function (code) {
-        return this.where({code: code}).fet();
+        return Language.where({code: code}).fetch();
     }
 });
 

@@ -3,8 +3,9 @@ var router = express.Router();
 
 router.get('/', function (req, res) {
 
-    var Languages = require('./collections/languages');
+    var Languages = require('../collections/languages');
     var languages = new Languages();
+    
     languages.findAll().then(function (languages) {
 
         languages.models.forEach(function (language) {
@@ -22,6 +23,25 @@ router.get('/', function (req, res) {
         //    console.log(language.get('id'));    
         //}
 
+    });
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(['Hi']));
+
+
+});
+
+router.get('/lang/:lang', function (req, res) {
+
+    var Languages = require('../collections/languages');
+    var languages = new Languages();
+    var lang =  req.params.lang;
+    
+    console.log(lang);
+    
+    languages.findOneByCode(lang).then(function (language) {
+        console.log(language.get('code'));
+        console.log(language.get('name'));
     });
 
     res.setHeader('Content-Type', 'application/json');

@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/words', function (req, res) {
+router.get('/:lang', function (req, res) {
+    
+    var lang = req.
     res.setHeader('Content-Type', 'application/json');
     var _words = [{
         text: 'Teste',
