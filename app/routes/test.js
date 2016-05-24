@@ -3,10 +3,9 @@ var router = express.Router();
 
 router.get('/', function (req, res) {
 
-    var Languages = require('../collections/languages');
-    var languages = new Languages();
+    var languageRepository = require('../repository/languageRepository');
     
-    languages.findAll().then(function (languages) {
+    languageRepository.findAll().then(function (languages) {
 
         languages.models.forEach(function (language) {
             
