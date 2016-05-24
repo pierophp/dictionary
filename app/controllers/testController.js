@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var languageRepository = require('../repository/languageRepository');
 
 router.get('/', function (req, res) {
-
-    var languageRepository = require('../repository/languageRepository');
     
     languageRepository.findAll().then(function (languages) {
 
@@ -17,11 +16,6 @@ router.get('/', function (req, res) {
             //language.save();
         });
 
-
-        //for(language in languages){
-        //    console.log(language.get('id'));    
-        //}
-
     });
 
     res.setHeader('Content-Type', 'application/json');
@@ -31,22 +25,19 @@ router.get('/', function (req, res) {
 });
 
 router.get('/lang/:lang', function (req, res) {
-
-    var Languages = require('../collections/languages');
-    var languages = new Languages();
-    var lang =  req.params.lang;
     
-    console.log(lang);
+    let lang =  req.params.lang;
     
-    languages.findOneByCode(lang).then(function (language) {
+    languageRepository.findOneByCode(lang).then(function (language) {
+        
         console.log(language.get('code'));
         console.log(language.get('name'));
+        
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(language));
     });
 
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(['Hi']));
-
-
+    
 });
 
 module.exports = router;

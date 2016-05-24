@@ -1,16 +1,10 @@
-    
-var bookshelf  = require('../services').bookshelf;
-
-var language = require;
+var language = require('../models/language');
 var languageRepository = module.exports;
 
 languageRepository.findAll = function (code) {
-    
-    console.log(bookshelf.model('Language'));
-    
-    return bookshelf.model('Language').fetch();
+    return language.where({}).fetchAll();
 };
 
 languageRepository.findOneByCode = function (code) {
-    return bookshelf.model('Language').where({code: code}).fetch();
+    return language.where({code: code}).fetch();
 };

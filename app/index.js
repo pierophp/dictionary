@@ -5,12 +5,11 @@ var app = express();
 
 app.use(express.static('public'));
 
-app.use('/', require('./routes/index'));
-app.use('/test', require('./routes/test'));
-app.use('/letters', require('./routes/letters'));
-app.use('/words', require('./routes/words'));
-)
-app.listen(9000, function () {
+app.use('/', require('./controllers/indexController'));
+app.use('/test', require('./controllers/testController'));
+app.use('/letters', require('./controllers/lettersController'));
+app.use('/words', require('./controllers/wordsController'));
+
+app.listen(9000, function() {
     console.log('Example app listening on port 9000!');
 });
-

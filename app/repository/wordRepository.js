@@ -1,8 +1,11 @@
-    
-var bookshelf  = require('../services').bookshelf;
 
+var word = require('../models/language');
 var wordRepository = module.exports;
 
-wordRepository.findOneByCode = function (language) {
-    return bookshelf.model('Word').where({language: language.get('id')}).fetch();
+wordRepository.findByLanguageDecorator = function (word, language) {
+    return word.where('language_id', '=', language.get('id'));
+};
+
+wordRepository.findByLetterDecorator = function (word, letter) {
+    return word.where('text', 'LIKE', letter + '%');
 };
