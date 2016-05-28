@@ -1,16 +1,27 @@
-"use strict";
+var Model = require('objection').Model;
 
-var bookshelf = require('../services').bookshelf,
-    TranslationWord;
+/**
+ * @extends Model
+ * @constructor
+ */
+function TranslationWord() {
+  Model.apply(this, arguments);
+}
 
-TranslationWord = bookshelf.Model.extend({
-    tableName: 'translation_word',
-    word: function() {
-        return this.belongsTo(Word);
-    },
-    translation: function() {
-        return this.belongsTo(Translation);
+Model.extend(TranslationWord);
+module.exports = TranslationWord;
+
+
+// Table name is the only required property.
+TranslationWord.tableName = 'translation_word';
+TranslationWord.relationMappings = {
+  word: {
+    relation: Model.OneToOneRelation,
+    modelClass: __dirname + '/Word',
+    join: {
+      from: 'translation_word.word_id',
+      to: 'word.id'
     }
-});
+  }  
+};
 
-module.exports = bookshelf.model('TranslationWord', TranslationWord);

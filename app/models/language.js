@@ -1,10 +1,15 @@
-"use strict";
+var Model = require('objection').Model;
 
-var bookshelf = require('../services').bookshelf,
-    Language;
+/**
+ * @extends Model
+ * @constructor
+ */
+function Language() {
+  Model.apply(this, arguments);
+}
 
-Language = bookshelf.Model.extend({
-    tableName: 'language'
-});
+Model.extend(Language);
+module.exports = Language;
 
-module.exports = bookshelf.model('Language', Language);
+// Table name is the only required property.
+Language.tableName = 'language';

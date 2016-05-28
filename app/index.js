@@ -2,6 +2,7 @@
 
 var express = require('express');
 var app = express();
+require('./services/objection');
 
 app.use(express.static('public'));
 

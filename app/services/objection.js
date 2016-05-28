@@ -12,9 +12,10 @@ var knex = require('knex')({
   }
 });
 
-var bookshelf =  require('bookshelf')(knex);
+knex.on( 'query', function( queryData ) {
+    console.log( queryData );
+});
 
-bookshelf.plugin('pagination');
-bookshelf.plugin('registry');
+var Model = require('objection').Model;
 
-module.exports = bookshelf;
+Model.knex(knex);

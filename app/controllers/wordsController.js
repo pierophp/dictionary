@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
-
-var languageRepository = require('../repository/languageRepository');
-var wordRepository = require('../repository/wordRepository');
+var LanguageRepository = require('../repository/LanguageRepository');
+var WordRepository = require('../repository/WordRepository');
 
 router.get('/:lang', function (req, res) {
 
@@ -10,48 +9,45 @@ router.get('/:lang', function (req, res) {
 
     let langCode = req.params.lang;
     let letter = req.query.letter;
+    let _words = [];
 
-    let word = require('../models/word');
-    let language = languageRepository.findOneByCode(langCode).then(function (language) {
+    LanguageRepository.findOneByCode(langCode).then(function (language) {
 
-        word = wordRepository.findByLanguageDecorator(word, language);
-        word = wordRepository.findByLetterDecorator(word, letter);
+        WordRepository.findByLanguageAndLetter(language, letter).then(function (words) {
+            
+            words.forEach(function (word) {
 
-        word.fetchAll().then(function (words) {
-            words.models.forEach(function (word) {
-                console.log(word.get('text'));
+                let _observation = '';
+                let _translationWords = [];
+
+                if (word.translations[0]) {
+
+                    let translation = word.translations[0];
+
+                    _observation = translation.observation;
+
+                    translation.translationWords.forEach(function (translationWord) {
+                        
+                        _translationWords.push({
+                            text: translationWord.word.text
+                        });
+
+                    });
+                }
+
+                _words.push({
+                    text: word.text,
+                    translation: {
+                        observation: _observation,
+                        words: _translationWords
+                    }
+                });
             });
+
+            res.send(JSON.stringify(_words));
         });
 
     });
-
-
-
-    
-    var _words = [{
-        text: 'Teste',
-        translation: {
-            observation: 'Observation test',
-            words: [
-                {
-                    text: 'Loren'
-                }, {
-                    text: 'Ipsum'
-                }
-            ]
-        },
-    }, {
-            text: 'Teste 02',
-            translation: {
-                observation: 'Observation test 02',
-                words: [
-                    {
-                        text: 'Dolor'
-                    }
-                ]
-            },
-        }];
-    res.send(JSON.stringify(_words));
 });
 
 module.exports = router;
