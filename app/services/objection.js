@@ -12,9 +12,11 @@ var knex = require('knex')({
   }
 });
 
+/*
 knex.on( 'query', function( queryData ) {
     console.log( queryData );
 });
+*/
 
 var Model = require('objection').Model;
 

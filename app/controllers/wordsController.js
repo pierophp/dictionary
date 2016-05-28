@@ -3,48 +3,54 @@ var router = express.Router();
 var LanguageRepository = require('../repository/LanguageRepository');
 var WordRepository = require('../repository/WordRepository');
 
-router.get('/:lang', function (req, res) {
+router.get('/:type/:fromLang/:toLang', function (req, res) {
 
     res.setHeader('Content-Type', 'application/json');
 
-    let langCode = req.params.lang;
+    let fromLangCode = req.params.fromLang;
+    let toLangCode = req.params.toLang;
+    let type = req.params.type;
     let letter = req.query.letter;
     let _words = [];
 
-    LanguageRepository.findOneByCode(langCode).then(function (language) {
+    LanguageRepository.findOneByCode(fromLangCode).then(function (fromLanguage) {
 
-        WordRepository.findByLanguageAndLetter(language, letter).then(function (words) {
-            
-            words.forEach(function (word) {
+        LanguageRepository.findOneByCode(toLangCode).then(function (toLanguage) {
 
-                let _observation = '';
-                let _translationWords = [];
+            WordRepository.findByLanguageAndTypeAndLetter(fromLanguage, toLanguage, type, letter).then(function (words) {
 
-                if (word.translations[0]) {
+                words.forEach(function (word) {
 
-                    let translation = word.translations[0];
+                    let _observation = '';
+                    let _translationWords = [];
 
-                    _observation = translation.observation;
+                    if (word.translations[0]) {
 
-                    translation.translationWords.forEach(function (translationWord) {
-                        
-                        _translationWords.push({
-                            text: translationWord.word.text
+                        let translation = word.translations[0];
+
+                        _observation = translation.observation;
+
+                        translation.translationWords.forEach(function (translationWord) {
+
+                            _translationWords.push({
+                                text: translationWord.word.text
+                            });
+
                         });
-
-                    });
-                }
-
-                _words.push({
-                    text: word.text,
-                    translation: {
-                        observation: _observation,
-                        words: _translationWords
                     }
+
+                    _words.push({
+                        text: word.text,
+                        translation: {
+                            observation: _observation,
+                            words: _translationWords
+                        }
+                    });
                 });
+
+                res.send(JSON.stringify(_words));
             });
 
-            res.send(JSON.stringify(_words));
         });
 
     });
