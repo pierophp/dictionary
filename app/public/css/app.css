@@ -1,7 +1,9 @@
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 #letters {
     text-align: center;
     padding: 5px 0;
+    margin-bottom: 15px;
 }
 
 #letters a {

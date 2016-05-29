@@ -1,5 +1,5 @@
 <div id="letters">
-    <a ng-repeat="letter in letters" href="?letter={{ letter }}">{{ letter | uppercase}}</a>
+    <a ng-repeat="letter in letters" href="#words/W/pt/en/{{ letter }}">{{ letter | uppercase}}</a>
 </div>
 
 <div ng-repeat="word in words" class="word">
@@ -10,3 +10,5 @@
         </li>
     </ul>
 </div>
+
+<div ng-hide="words.length" class="alert alert-warning">Não foram encontradas traduções</div>

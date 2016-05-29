@@ -6,6 +6,7 @@ WordRepository.findByLanguageAndTypeAndLetter = function (fromLanguage, toLangua
     .query()
     .where('language_id', '=', fromLanguage.id)
     .andWhere('text', 'LIKE', letter + '%')
+    .andWhere('type', '=', type)
     .eager('[translations, translations.translationWords, translations.translationWords.word]')
     .context({
       onBuild: function (builder) {
