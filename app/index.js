@@ -5,9 +5,12 @@ var app = express();
 require('./services/objection');
 
 app.use(express.static('public'));
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    return next();
+});
 
 app.use('/', require('./controllers/indexController'));
-app.use('/test', require('./controllers/testController'));
 app.use('/letters', require('./controllers/lettersController'));
 app.use('/words', require('./controllers/wordsController'));
 
