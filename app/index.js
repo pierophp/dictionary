@@ -2,18 +2,22 @@
 
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+
 require('./services/objection');
 
 app.use(express.static('public'));
-app.use(function(req, res, next) {
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     return next();
 });
 
-app.use('/', require('./controllers/indexController'));
-app.use('/letters', require('./controllers/lettersController'));
-app.use('/words', require('./controllers/wordsController'));
+require('./routes')(app);
 
-app.listen(9000, function() {
-    console.log('Example app listening on port 9000!');
+app.listen(9000, function () {
+    console.log('App listening on port 9000!');
 });

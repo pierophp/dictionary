@@ -11,6 +11,7 @@
   "main": "./main.js",
   "dependencies": {
     "bluebird": "^3.4.0",
+    "body-parser": "^1.15.2",
     "electron-window-manager": "^1.0.1",
     "express": "^4.13.4",
     "knex": "^0.11.3",
