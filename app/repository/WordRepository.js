@@ -64,3 +64,22 @@ WordRepository.save = function (word) {
             });
     });
 };
+
+WordRepository.findByForm = function (form) {
+
+    let query = WordModel.query();
+
+    if (form.word) {
+        query.andWhere('text', 'LIKE', form.word + '%');
+    }
+
+    if (form.type) {
+        query.andWhere('type', '=', form.type);
+    }
+
+    if (form.language_id) {
+        query.andWhere('language_id', '=', form.language_id);
+    }
+
+    return query;
+};

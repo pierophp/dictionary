@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var LanguageRepository = require('../repository/LanguageRepository');
 var WordRepository = require('../repository/WordRepository');
 var TranslationRepository = require('../repository/TranslationRepository');
+var TranslationWordRepository = require('../repository/TranslationWordRepository');
 
 router.post('/create', function (req, res) {
 
@@ -14,40 +15,105 @@ router.post('/create', function (req, res) {
 
     Promise.join(fromLangPromise, toLangPromise, function (fromLanguage, toLanguage) {
 
+        /**
+         * SAVE FROM LANGUAGE WORD
+         */
         WordRepository.save({
             text: word,
             type: type,
             language_id: fromLanguage.id
-        }).then(function (wordEntity) {
+        })
+            /**
+             * SAVE FROM LANGUAGE TRANSLATION
+             */
+            .then(function (wordEntity) {
+                return TranslationRepository.save({
+                    word_id: wordEntity.id,
+                    language_id: toLanguage.id,
+                    observation: req.body.observation.trim()
+                })
+            })
+            .then(function (translationEntity) {
 
-            for (translation of req.body.translations) {
-                WordRepository.save({
-                    text: translation.trim(),
-                    type: type,
-                    language_id: toLanguage.id
-                }).then(function (response) {
+                let translationWordsIds = [];
+                let translationPromisses = [];
+
+                for (translation of req.body.translations) {
+
+                    /**
+                     * SAVE TO LANGUAGE WORD
+                     */
+                    let translationPromisse = WordRepository.save({
+                        text: translation.trim(),
+                        type: type,
+                        language_id: toLanguage.id
+
+                    })
+                        /**
+                         * SAVE TRANSLATION WORD
+                         */
+                        .then(function (toWordEntity) {
+                            return TranslationWordRepository.save({
+                                word_id: toWordEntity.id,
+                                translation_id: translationEntity.id,
+                            });
+
+                        })
+                        .then(function (response) {
+                            translationWordsIds.push(response.id);
+                            console.log('Success');
+                        });
+
+                    translationPromisses.push(translationPromisse);
+                }
+
+                Promise.all(translationPromisses)
+                    .then(function () {
+
+                        TranslationWordRepository.deleteRemaining(translationEntity.id, translationWordsIds)
+                            .then(function (response) {
+
+                                res.setHeader('Content-Type', 'application/json');
+                                res.send(JSON.stringify({ success: true }));
+                            });
 
 
-                });
-            }
-
-
-            TranslationRepository.save({
-                word_id: wordEntity.id,
-                language_id: toLanguage.id,
-                observation: req.body.observation.trim()
-            }).then(function (response) {
+                    })
+                    .catch(function (error) {
+                        console.log('Error:', error);
+                        res.setHeader('Content-Type', 'application/json');
+                        res.send(JSON.stringify({ success: false }));
+                    });
 
 
             });
 
+    });
+
+});
+
+router.post('/search', function (req, res) {
+
+    let query = WordRepository.findByForm(req.body.form);
+    let queryCount = query.clone()
+
+    queryCount.first().count('id as total').then((result) => {
+        
+        let currentPage = req.body.pagination.current_page;
+        let perPage = req.body.pagination.per_page;
+
+        query.offset((currentPage*perPage) - perPage);
+        query.limit(req.body.pagination.per_page);
+        query.orderBy('text');
+        query.then((words) => {
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify({
+                success: true, data: {
+                    items: words,
+                    total: result.total
+                }
+            }));
         });
-
-
-
-        //res.setHeader('Content-Type', 'application/json');
-        //res.send(JSON.stringify({ word: req.body.word }));
-
     });
 
 
