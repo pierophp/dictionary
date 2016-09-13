@@ -39,6 +39,7 @@ WordRepository.save = function (word) {
     return new Promise(function (resolve, reject) {
 
         WordRepository.findOneByLanguageAndTypeAndText(word.language_id, word.type, word.text)
+
             .then(function (entity) {
 
                 if (entity) {
@@ -82,4 +83,20 @@ WordRepository.findByForm = function (form) {
     }
 
     return query;
+};
+
+WordRepository.findOneById = function (id) {
+
+    return WordModel
+        .query()
+        .where('id', '=', id)
+        .first();
+};
+
+WordRepository.findByTranslation = function (translation) {
+
+    return WordModel
+        .query()
+        .innerJoin('translation_word', 'translation_word.word_id', 'word.id')
+        .where('translation_word.translation_id', '=', translation);
 };

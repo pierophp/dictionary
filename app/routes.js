@@ -3,6 +3,7 @@ module.exports = function (app) {
     app.use('/', require('./controllers/indexController'));
     app.use('/letters', require('./controllers/lettersController'));
     app.use('/words', require('./controllers/wordsController'));
+    app.use('/languages', require('./controllers/languagesController'));
     app.use('/admin/words', require('./controllers/adminWordsController'));
 
 

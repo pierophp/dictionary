@@ -6,8 +6,6 @@ var WordRepository = require('../repository/WordRepository');
 
 router.get('/:type/:fromLang/:toLang', function (req, res) {
 
-    res.setHeader('Content-Type', 'application/json');
-
     let fromLangCode = req.params.fromLang;
     let toLangCode = req.params.toLang;
     let type = req.params.type;

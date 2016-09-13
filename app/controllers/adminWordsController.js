@@ -6,7 +6,7 @@ var WordRepository = require('../repository/WordRepository');
 var TranslationRepository = require('../repository/TranslationRepository');
 var TranslationWordRepository = require('../repository/TranslationWordRepository');
 
-router.post('/create', function (req, res) {
+router.post('/save', function (req, res) {
 
     var fromLangPromise = LanguageRepository.findOneByCode(req.body.fromLang);
     var toLangPromise = LanguageRepository.findOneByCode(req.body.toLang);
@@ -72,8 +72,6 @@ router.post('/create', function (req, res) {
 
                         TranslationWordRepository.deleteRemaining(translationEntity.id, translationWordsIds)
                             .then(function (response) {
-
-                                res.setHeader('Content-Type', 'application/json');
                                 res.send(JSON.stringify({ success: true }));
                             });
 
@@ -81,7 +79,6 @@ router.post('/create', function (req, res) {
                     })
                     .catch(function (error) {
                         console.log('Error:', error);
-                        res.setHeader('Content-Type', 'application/json');
                         res.send(JSON.stringify({ success: false }));
                     });
 
@@ -98,26 +95,48 @@ router.post('/search', function (req, res) {
     let queryCount = query.clone()
 
     queryCount.first().count('id as total').then((result) => {
-        
+
         let currentPage = req.body.pagination.current_page;
         let perPage = req.body.pagination.per_page;
 
-        query.offset((currentPage*perPage) - perPage);
+        query.offset((currentPage * perPage) - perPage);
         query.limit(req.body.pagination.per_page);
         query.orderBy('text');
         query.then((words) => {
-            res.setHeader('Content-Type', 'application/json');
             res.send(JSON.stringify({
-                success: true, data: {
+                success: true,
+                data: {
                     items: words,
                     total: result.total
                 }
             }));
         });
     });
+});
 
+router.post('/find', function (req, res) {
 
+    let language = 3;
 
+    WordRepository.findOneById(req.body.id)
+        .then((word) => {
+            this.word = word;
+            return TranslationRepository.findOneByLanguageAndWord(language, word.id);
+        })
+        .then((translation) => {
+            this.translation = translation;
+            return WordRepository.findByTranslation(translation.id);
+        })
+        .then((translationsWords) => {
+            res.send(JSON.stringify({
+                success: true,
+                data: {
+                    word: this.word,
+                    translation: this.translation,
+                    translationsWords: translationsWords
+                }
+            }));
+        });
 });
 
 module.exports = router;

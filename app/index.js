@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader('Content-Type', 'application/json');
     return next();
 });
 
