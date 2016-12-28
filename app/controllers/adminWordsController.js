@@ -139,4 +139,29 @@ router.post('/find', function (req, res) {
         });
 });
 
+router.post('/delete', function (req, res) {
+
+    let language = 3;
+
+    WordRepository.findOneById(req.body.id)
+        .then((word) => {
+            this.word = word;
+            return TranslationRepository.findOneByLanguageAndWord(language, word.id);
+        })
+        .then((translation) => {
+            this.translation = translation;
+            return WordRepository.findByTranslation(translation.id);
+        })
+        .then((translationsWords) => {
+            res.send(JSON.stringify({
+                success: true,
+                data: {
+                    word: this.word,
+                    translation: this.translation,
+                    translationsWords: translationsWords
+                }
+            }));
+        });
+});
+
 module.exports = router;

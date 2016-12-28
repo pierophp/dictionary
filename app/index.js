@@ -6,7 +6,8 @@ var bodyParser = require('body-parser');
 
 require('./services/objection');
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
+app.use(express.static(__dirname + '/../../dictionary-ui/dist'));
 app.use(bodyParser.urlencoded({
     extended: true
 }));

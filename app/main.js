@@ -50,7 +50,7 @@ function createWindow() {
     let app_version = pjson.version;
     let platform = process.platform;
 
-    let main_url = 'http://localhost:9000';
+    let main_url = 'http://localhost:9000/index.html';
     main_url += '?electron_version=' + electron_version;
     main_url += '&chrome_version=' + chrome_version;
     main_url += '&app_version=' + app_version;
